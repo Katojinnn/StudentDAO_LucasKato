@@ -34,8 +34,8 @@ public class H2SCursoDAO implements CursoDAO {
 
   private void createTableIfNotExists() {
     try {
-      String sql = "CREATE TABLE IF NOT EXISTS students(" +
-          "ra INT, name VARCHAR(256), PRIMARY KEY (ra));";
+      String sql = "CREATE TABLE IF NOT EXISTS cursos(" +
+          "idCurso INT, nomeCursco VARCHAR(256), PRIMARY KEY (idCurso));";
       PreparedStatement stmt = connection.prepareStatement(sql);
       stmt.execute();
     } catch (SQLException ex) {
@@ -49,11 +49,10 @@ public class H2SCursoDAO implements CursoDAO {
   @Override
   public boolean create(Curso curso) {
     try {
-      String sql = "INSERT INTO cursos VALUES(?,?,?)";
+      String sql = "INSERT INTO cursos VALUES(?,?)";
       PreparedStatement stmt = connection.prepareStatement(sql);
       stmt.setInt(1, curso.getIdCurso());
       stmt.setString(2, curso.getNomeCurso());
-      stmt.setString(3, curso.getPeriodoCurso());
       stmt.executeUpdate();
 
       return true;
@@ -71,7 +70,7 @@ public class H2SCursoDAO implements CursoDAO {
   @Override
   public List<Curso> findAll() {
     try {
-      String sql = "SELECT * FROM curso";
+      String sql = "SELECT * FROM cursos";
       PreparedStatement stmt = connection.prepareStatement(sql);
       ResultSet rs = stmt.executeQuery();
 
